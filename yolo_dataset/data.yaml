@@ -1,0 +1,6 @@
+path: D:\DeepProject\PlantVillage\yolo_dataset
+train: images/train
+val: images/val
+names:
+- healthy
+- diseased
