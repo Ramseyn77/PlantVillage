@@ -16,42 +16,55 @@ def model_prediction(test_image):
     return result_index, probs, confidence
 
 
+
 #SideBar 
 
-st.sidebar.title("Dashboard")
+st.sidebar.title("PhytoDiag IA")
 app_mode = st.sidebar.selectbox('Select Page', ['Home', 'About', 'Disease Recognition'])
 
 #Home Page 
-if (app_mode == "Home") :
-    st.header('PLANT DISEASE RECOGNITION SYSTEM')
+if (app_mode == "Acceul") :
+    st.header('PhytoDiag IA')
     image_path = "./home_image.JPG"
     st.image(image_path, use_column_width=True)
     st.markdown("""
-    #### Welcome to the Plant Disease Recognition System
+    #### Bienvenue dans le système de reconnaissance des maladies des plantes
 
-    Our mission is to help in identifying plant diseases efficiently. Upload an image of a plant and our system will analyze 
-    it to detect any signs of disease. Together, let's protect our crops ans ensure a healthier  
+    Notre mission est d'aider à identifier efficacement les maladies des plantes. Téléversez une image d'une plante et notre système l'analysera 
+    pour détecter tout signe de maladie. Ensemble, protégeons nos cultures et assurons un avenir plus sain.
 """)
 
 # About Page
 
-if(app_mode =='About') :
-    st.header("About")
+if(app_mode =='A propos') :
+    st.header("À propos")
     st.markdown("""
-    #### About Dataset
+    ### À propos
+    #### 1. Objectif
+        Développer une application web qui détecte automatiquement l’état de santé d’une plante à partir d’une 
+        image (saine ou malade) et identifie la maladie probable.
+    #### 2. Contexte
+        Le projet utilise un jeu de données de feuilles (poivron, pomme de terre, tomate) et
+        des modèles IA déjà entraînés (training_model.keras, YOLO).
+    #### 3. Périmètre
+        Téléversement d’image via l'interface web (Streamlit).
+        Prédiction de la classe (maladie/sain).
+        Affichage du niveau de confiance.
+        Affichage des meilleures prédictions.
+        Version locale.
     """)
 
 # Disease Recognition Page 
-if(app_mode == 'Disease Recognition') :
-    st.header("Disease Recognition")
-    test_image = st.file_uploader('Choose an image....')
-    if(st.button('Show Image')) :
+if(app_mode == 'Page de reconnaissance') :
+    st.header("Reconnaissance des maladies")
+    test_image = st.file_uploader('Choisissez une image...')
+    if(st.button('Afficher l\'image')) :
         st.image(test_image, use_column_width=True)
     # Predict Button 
-    if(st.button('Predict')) :
-        with st.spinner("Please wait ....") :
+    if(st.button('Prédire')) :
+        with st.spinner("Veuillez patienter ...") :
             time.sleep(3)
-            st.write("Our Prédiction")
+            st.write("Notre prédiction")
             result_index, probs, confidence = model_prediction(test_image)
             # Define Class
             class_names = ["Pepper__bell___Bacterial_spot",   "Pepper__bell___healthy",     "Potato___Early_blight",  "Potato___Late_blight",  "Potato___healthy",       
