@@ -6,3 +6,6 @@ torch
 pandas
 seaborn
 scikit-learn
+opencv-python>=4.8
+fpdf2>=2.7
+requests>=2.28

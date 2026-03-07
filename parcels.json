@@ -1,0 +1,13 @@
+{
+  "Tomates": [
+    {
+      "time": "09:10:51",
+      "file": "fffee500-8469-4c0f-a17d-d95c5516b446___Matt.S_CG 6210.JPG",
+      "label": "Tomato_Septoria_leaf_spot",
+      "confidence": "92.6%",
+      "status": "Malade",
+      "date": "07/03/2026 09:12"
+    }
+  ],
+  "Poivrons": []
+}
