@@ -1,7 +1,6 @@
 
 import bcrypt
 import streamlit as st
-from psycopg2 import sql
 from databases.db import get_connection
 
 
@@ -58,20 +57,6 @@ def create_user(nom, prenom, email, password):
   cursor = conn.cursor()
   hashed_password = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode('utf-8')
 
-  columns = "nom, prenom, email, hash_password"
-  
-  values = [
-    nom,
-    prenom,
-    email,
-    hashed_password
-  ]
-  
-  query = sql.SQL("INSERT INTO utilisateurs ({}) VALUES ({})").format(
-      sql.SQL(', ').join(map(sql.Identifier, columns.split(', '))),
-      sql.SQL(', ').join(map(sql.Literal, values))
-  )
-
   cursor.execute("""
     INSERT INTO utilisateurs (nom, prenom, email, hash_password)
     VALUES (?, ?, ?, ?)
@@ -121,19 +106,6 @@ def update_user(user_id, nom, email):
   conn.commit()
   conn.close()
 
-def update_user(user_id, nom, email):
-
-  conn = get_connection()
-  cursor = conn.cursor()
-
-  cursor.execute("""
-  UPDATE utilisateurs
-  SET nom=?, email=?
-  WHERE id=?
-  """, (nom, email, user_id))
-
-  conn.commit()
-  conn.close()
   
   
 #Champs
@@ -154,7 +126,7 @@ def get_champs_by_user(user_id):
   cursor = conn.cursor()
 
   cursor.execute("""
-  SELECT nom, localisation, superficie FROM champs
+  SELECT id, nom, localisation, superficie FROM champs
   WHERE utilisateur_id = ?
   """, (user_id,))
 

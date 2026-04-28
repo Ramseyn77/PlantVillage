@@ -1,11 +1,17 @@
 import streamlit as st
+from utils.init_session import reset_session
 
 def show():
-  st.header("Connexion")
-  if not st.user.is_logged_in:
-      if st.button("Log in"):
-          st.login()
+  st.header("Mon Compte")
+  if st.session_state.get('authenticated'):
+      user = st.session_state.get('user')
+      if user:
+          st.write(f"**Nom :** {user.get('nom')}")
+          st.write(f"**Prénom :** {user.get('prenom')}")
+          st.write(f"**Email :** {user.get('email')}")
+      
+      if st.button("Se déconnecter"):
+          reset_session()
+          st.rerun()
   else:
-      if st.button("Log out"):
-          st.logout()
-      st.write(f"Hello, {st.user.name}!")
+      st.write("Vous n'êtes pas connecté.")

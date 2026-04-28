@@ -67,6 +67,10 @@ def sidebar_navigation():
         return "Historique"
     elif "Champs" in page:
         return "Champs"
+    elif "Cultures" in page:
+        return "Cultures"
+    elif "Analyses" in page:
+        return "Analyses"
     elif "À propos" in info_page:
         return "À propos"
     elif "Connexion" in user_page:

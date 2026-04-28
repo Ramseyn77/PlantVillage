@@ -37,7 +37,7 @@ def show():
     
     if st.button("Ajouter le champ"):
       if nom_champ and superficie and localisation and nom_champ.isalpha() and superficie.replace('.', '', 1).isdigit() and localisation.isalpha():
-        create_champ(nom_champ, float(superficie), localisation, st.session_state['user']['id'])
+        create_champ(nom_champ, localisation, float(superficie), st.session_state['user']['id'])
         st.success("Champ ajouté avec succès !")
         st.rerun()
       else:

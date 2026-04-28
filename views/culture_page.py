@@ -1,50 +1,44 @@
 import streamlit as st
-from utils.db_handler import *
-
+from utils.db_handler import get_champs_by_user, create_culture, get_cultures_by_champ
 
 def show():
-  st.title("Mes Champs")
-  cols = st.columns([1, 3])
+  st.title("Mes Cultures")
+  cols = st.columns([1, 1])
   
-  top_left_cell = cols[0].container(
-    border=True, height="stretch", vertical_alignment="center"
-  )
-  top_right_cell = cols[1].container(
-    border=True, height="stretch", vertical_alignment="top"
-  ) 
-  
-  with top_left_cell:
-    st.write("Ajoutez un champ")
-    st.write("")
-    nom_champ = st.text_input("Nom du champ : ")
-    if nom_champ and not nom_champ.isalpha():
-      st.error("Le nom ne doit contenir que des lettres")
+  with cols[0]:
+    st.subheader("Ajoutez une culture")
     
-    superficie = st.text_input("Superficie du champ (en hectares) : ")
-    if superficie and not superficie.replace('.', '', 1).isdigit():
-      st.error("La superficie doit être un nombre valide")  
+    champs = get_champs_by_user(st.session_state['user']['id'])
     
-    localisation = st.text_input("Localisation du champ : ")
-    if localisation and not localisation.isalpha():
-      st.error("La localisation ne doit contenir que des lettres")  
-    
-    if st.button("Ajouter le champ"):
-      if nom_champ and superficie and localisation and nom_champ.isalpha() and superficie.replace('.', '', 1).isdigit() and localisation.isalpha():
-        create_champ(nom_champ, float(superficie), localisation, st.session_state['user']['id'])
-        st.success("Champ ajouté avec succès !")
-        st.rerun()
-      else:
-        st.error("Veuillez entrer des informations valides pour tous les champs.")
-    st.image("./home_image.jpg" )
-  with top_right_cell: 
-    st.write("")
-    st.write("")
-    st.write("Description du champ")    
-    
-    st.write("Liste de vos champs :")
-    
-    champs_users = get_champs_by_user(st.session_state['user']['id'])
-    if champs_users:
-      st.table(champs_users)
+    if not champs:
+      st.warning("Veuillez d'abord ajouter un champ.")
     else:
-      st.write("Aucun champ trouvé pour cet utilisateur.")
+      champ_dict = {f"{c[1]} - {c[2]}": c[0] for c in champs}
+      selected_champ_ajout = st.selectbox("Sélectionnez le champ", list(champ_dict.keys()), key="champ_ajout")
+      
+      type_culture = st.text_input("Type de culture (ex: Tomate) : ")
+      date_plantation = st.date_input("Date de plantation :")
+      
+      if st.button("Ajouter la culture"):
+        if type_culture and type_culture.isalpha():
+          create_culture(type_culture, str(date_plantation), champ_dict[selected_champ_ajout])
+          st.success("Culture ajoutée avec succès !")
+          st.rerun()
+        else:
+          st.error("Le type de culture doit être alphabétique.")
+          
+  with cols[1]:
+    st.subheader("Liste de vos cultures")
+    if not champs:
+      st.write("Aucun champ.")
+    else:
+      selected_champ_liste = st.selectbox("Sélectionnez le champ", list(champ_dict.keys()), key="champ_liste")
+      cultures = get_cultures_by_champ(champ_dict[selected_champ_liste])
+      
+      if cultures:
+        import pandas as pd
+        df = pd.DataFrame(cultures, columns=["ID", "Type", "Date Plantation", "Champ ID"])
+        df = df.drop(columns=["ID", "Champ ID"])
+        st.dataframe(df, hide_index=True)
+      else:
+        st.info("Aucune culture pour ce champ.")

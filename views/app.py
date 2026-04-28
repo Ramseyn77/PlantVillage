@@ -8,29 +8,11 @@ from views import (
   reconnaissance_page,
   historique_page,
   connexion_page,  
-  champ_page,  
+  champ_page,
+  culture_page,
+  analyse_page
 )
 
-# 
-#     with st.sidebar:
-#         if st.session_state['guest_mode']:
-#             st.subheader("Guest Mode")
-            
-#             if st.button("Login"):
-#                 reset_session()
-#                 st.rerun()
-                
-#         else:
-#             if st.button("Logout"):
-#                 reset_session()
-#                 st.rerun()
-        
-#     st.title("App Page")
-#     st.write("Hello World")
-#     users = get_users()
-#     if users:
-#         st.table(users)
-    
  # --- SIDEBAR NAVIGATION ---
 def app_page():
   page = sidebar_navigation()
@@ -54,3 +36,8 @@ def app_page():
   elif page == "Champs":
     champ_page()
 
+  elif page == "Cultures":
+    culture_page()
+
+  elif page == "Analyses":
+    analyse_page()

@@ -95,13 +95,15 @@ def signup_page(extra_input_params=False, confirmPass=False):
                 for input_param, type in st.session_state['extra_input_params'].items():
                     input_field(input_param, type)
             
-            # Validate all required fields before proceeding
-            if st.session_state['user']['email']  and st.session_state['password']:
-                    if st.button("S'inscrire"):
-                        st.session_state['verifying'] = True
-                        st.rerun()
-            else:
-                if confirmPass and st.session_state['password'] != confirm_password:
-                    st.error("Les mots de passe ne correspondent pas")
-                elif st.button("S'inscrire"):
+            if st.button("S'inscrire"):
+                if not (st.session_state['user']['nom'] and st.session_state['user']['prenom'] and st.session_state['user']['email'] and st.session_state['password']):
                     st.error("Merci de remplir tous les champs requis")
+                elif confirmPass and st.session_state['password'] != confirm_password:
+                    st.error("Les mots de passe ne correspondent pas")
+                elif not is_valid_email(st.session_state['user']['email']):
+                    st.error("Merci d'entrer une adresse e-mail valide")
+                elif not (st.session_state['user']['nom'].isalpha() and st.session_state['user']['prenom'].isalpha()):
+                    st.error("Le nom et le prénom ne doivent contenir que des lettres")
+                else:
+                    st.session_state['verifying'] = True
+                    st.rerun()

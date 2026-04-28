@@ -3,7 +3,7 @@ from utils.init_session import init_session, reset_session
 from utils.navigate import sidebar_navigation
 from views.app import app_page
 from views.login import login_page
-from views.singup import signup_page
+from views.signup import signup_page
 
 
 if __name__ == "__main__":
