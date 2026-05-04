@@ -4,9 +4,9 @@ from utils.style import card
 def show():
     # Hero Section
     st.markdown("""
-        <div style="text-align: center; padding: 4rem 2rem; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-radius: 20px; color: white; margin-bottom: 3rem; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2); position: relative; overflow: hidden;">
+        <div class="phytodiag-hero" style="text-align: center; padding: 4rem 2rem; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-radius: 20px; color: white; margin-bottom: 3rem; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2); position: relative; overflow: hidden;">
             <div style="position: absolute; top: -50%; left: -10%; width: 50%; height: 200%; background: radial-gradient(circle, rgba(16,185,129,0.15) 0%, rgba(0,0,0,0) 70%); transform: rotate(30deg);"></div>
-            <h1 style="color: white; font-size: 3.5rem; font-weight: 800; margin-bottom: 1rem; position: relative; z-index: 1;">PhytoDiag IA <span style="color: #10b981;">🌿</span></h1>
+            <h1 style="color: white; font-size: 3.5rem; font-weight: 800; margin-bottom: 1rem; position: relative; z-index: 1;">PhytoDiag IA <span class="leaf" style="color: #10b981;">🌿</span></h1>
             <p style="font-size: 1.2rem; max-width: 650px; margin: 0 auto; opacity: 0.9; line-height: 1.6; position: relative; z-index: 1;">
                 L'intelligence artificielle au service de vos cultures. Détectez les maladies avec précision, obtenez des recommandations instantanées et protégez vos rendements.
             </p>

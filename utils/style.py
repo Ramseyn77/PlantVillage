@@ -16,6 +16,21 @@ def load_css():
             background-color: #f8fafc;
         }
 
+        /* Home hero */
+        .phytodiag-hero,
+        .phytodiag-hero h1,
+        .phytodiag-hero p {
+            color: #ffffff !important;
+        }
+
+        .phytodiag-hero p {
+            color: #dbeafe !important;
+        }
+
+        .phytodiag-hero .leaf {
+            color: #34d399 !important;
+        }
+
         /* Sidebar Styling */
         [data-testid="stSidebar"] {
             background-color: #ffffff;
