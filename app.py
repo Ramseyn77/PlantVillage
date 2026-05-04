@@ -7,12 +7,20 @@ from views.signup import signup_page
 
 
 if __name__ == "__main__":
+  from databases.db import init_db
+  init_db()  # Crée la BDD automatiquement en production
+  
   init_session()
   
   st.set_page_config(
     page_title="PhytoDiag IA",
-    layout="wide"
+    page_icon="🌿",
+    layout="wide",
+    initial_sidebar_state="expanded"
   )
+  
+  from utils.style import load_css
+  load_css()
   
   if st.session_state['authenticated']:
     app_page()
