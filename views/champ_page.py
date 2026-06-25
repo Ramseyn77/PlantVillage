@@ -5,6 +5,17 @@ def show():
   st.markdown("<h1 style='color: #1e293b; margin-bottom: 1.5rem;'>Mes Champs 🌾</h1>", unsafe_allow_html=True)
   st.markdown("<p style='color: #64748b; font-size: 1.1rem; margin-bottom: 2rem;'>Gérez vos différentes parcelles agricoles.</p>", unsafe_allow_html=True)
   
+  if st.session_state.get('guest_mode') or not st.session_state.get('user') or not st.session_state['user'].get('id'):
+      st.warning("⚠️ Cette fonctionnalité nécessite un compte utilisateur.")
+      st.info("Veuillez vous connecter ou créer un compte pour commencer à gérer vos champs.")
+      col_btn1, col_btn2, col_btn3 = st.columns([1, 1.5, 1])
+      with col_btn2:
+          if st.button("Se connecter / S'inscrire", use_container_width=True, key="redirect_champ"):
+              from utils.init_session import reset_session
+              reset_session()
+              st.rerun()
+      return
+      
   cols = st.columns([1, 2])
   
   with cols[0]:

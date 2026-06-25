@@ -35,9 +35,18 @@ def signup_page(extra_input_params=False, confirmPass=False):
                 
                 if st.session_state['otp'] == "":
                     st.session_state['otp'] = generate_otp()
-                    send_email(st.session_state['user']['email'], st.session_state['otp'])
+                    try:
+                        send_email(st.session_state['user']['email'], st.session_state['otp'])
+                    except Exception as e:
+                        st.session_state['verifying'] = False
+                        st.session_state['otp'] = ""
+                        st.error(f"Erreur lors de l'envoi de l'e-mail de validation : {e}")
+                        st.info("Veuillez vérifier votre adresse e-mail ou votre connexion Internet.")
+                        if st.button("Retour à l'inscription", use_container_width=True):
+                            st.rerun()
+                        return
                 
-                otp_input = st.text_input("Code de vérification", placeholder="Entrez le code à 6 chiffres")
+                otp_input = st.text_input("Code de vérification", placeholder="Entrez le code à 4 chiffres")
                 
                 col_btn1, col_btn2 = st.columns(2)
                 with col_btn1:
@@ -46,8 +55,11 @@ def signup_page(extra_input_params=False, confirmPass=False):
                 with col_btn2:
                     if st.button("Renvoyer le code", use_container_width=True):
                         st.session_state['otp'] = generate_otp()
-                        send_email(st.session_state['user']['email'], st.session_state['otp'])
-                        st.success("Un nouveau code a été envoyé.")
+                        try:
+                            send_email(st.session_state['user']['email'], st.session_state['otp'])
+                            st.success("Un nouveau code a été envoyé.")
+                        except Exception as e:
+                            st.error(f"Erreur lors du renvoi du code : {e}")
         else:
             with st.container(border=True):
                 st.markdown("<h2 style='text-align: center; color: #1e293b; margin-bottom: 1.5rem;'>Créer un compte</h2>", unsafe_allow_html=True)
